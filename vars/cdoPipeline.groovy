@@ -1,4 +1,3 @@
-package vars
 
 def call(body) {
     def pipelineParams = [:]
