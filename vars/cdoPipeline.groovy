@@ -12,7 +12,7 @@ def call(body) {
         }
 
         tools {
-            maven 'Maven'
+            maven 'maven'
             jdk 'jdk'
         }
 
