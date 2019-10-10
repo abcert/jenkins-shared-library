@@ -10,6 +10,12 @@ def call(body) {
             //label 'builder-backend'
             label 'master'
         }
+
+        tools {
+            maven 'Maven 3.6.2'
+            jdk 'jdk8'
+        }
+
         options {
             disableConcurrentBuilds()
             skipStagesAfterUnstable()
