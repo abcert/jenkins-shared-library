@@ -12,8 +12,8 @@ def call(body) {
         }
 
         tools {
-            maven 'Maven 3.6.2'
-            jdk 'jdk8'
+            maven 'Maven'
+            jdk 'jdk'
         }
 
         options {
