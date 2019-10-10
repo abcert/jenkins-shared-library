@@ -1,6 +1,4 @@
-import jenkins.model.Jenkins
-import com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy
-import com.michelin.cio.hudson.plugins.rolestrategy.Role
+
 
 def call(body) {
     def pipelineParams = [:]
