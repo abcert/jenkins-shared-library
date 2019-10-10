@@ -10,11 +10,41 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+
+    //jcenter()
+    maven {
+        //url "https://repo.spring.io/plugins-release/"
+        url "https://repo.jenkins-ci.org/releases/"
+    }
 }
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    //compile 'org.codehaus.groovy:groovy-all:2.5.6'
+    compile 'org.apache.ivy:ivy:2.4.0'
+
+
+    //compile group: 'org.jenkins-ci.plugins.workflow', name: 'workflow-step-api', version: '2.13'
+    //testCompile group: 'org.jenkins-ci.plugins.workflow', name: 'workflow-job', version: '2.15'
+    //testCompile group: 'org.jenkins-ci.plugins.workflow', name: 'workflow-cps', version: '2.41'
+    //compile group: 'org.jenkins-ci.plugins.workflow', name: 'workflow-scm-step', version: '2.6'
+
+
+    //compile 'org.jenkins-ci.main:jenkins-core:2.23'
+    compile group: 'org.jenkins-ci.main', name: 'jenkins-core', version: '2.85', ext: 'jar'
+
+// Jenkins plugins
+    compile group: 'org.jenkins-ci.plugins', name: 'credentials', version: '2.1.13', ext: 'jar'
+    compile group: 'org.jenkins-ci.plugins', name: 'matrix-auth', version: '1.6', ext: 'jar'
+    compile group: 'org.jenkins-ci.plugins.workflow', name: 'workflow-cps', version: '2.39', ext: 'jar'
+
+    compile group: 'org.jenkins-ci.plugins', name: 'pipeline-utility-steps', version: '1.0'
+// TRICKY: The lib folder contains all other plugins *JAR* files
+// if not found in Maven
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+
 }
 
 sourceSets {
@@ -33,3 +63,4 @@ sourceSets {
         }
     }
 }
+
