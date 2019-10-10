@@ -30,6 +30,8 @@ def call(body) {
                      sh """
                     ls -lrt
                     """
+
+                     sh 'mvn clean package -DskipTests=true'
                  }
 
 
