@@ -25,6 +25,10 @@ def call(body) {
                     sh """
             ls -lrt
           """
+
+                 dir("javamodule")
+                 sh "ls -lrt"
+
                 }
                 post {
                     success {
