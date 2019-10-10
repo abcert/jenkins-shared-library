@@ -26,8 +26,12 @@ def call(body) {
             ls -lrt
           """
 
-                 dir("javamodule")
-                 sh "ls -lrt"
+                 dir("javamodule"){
+                     sh """
+                    ls -lrt
+                    """
+                 }
+
 
                 }
                 post {
