@@ -6,8 +6,6 @@ def call(body) {
     body.delegate = pipelineParams
     body()
 
-    def instance = Jenkins.getInstance().getAuthorizationStrategy() .hasPermission("devuser", Jenkins.ADMINISTER)
-
 
     pipeline {
         agent {
