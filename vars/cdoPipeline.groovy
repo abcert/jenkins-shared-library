@@ -1,9 +1,15 @@
+import jenkins.model.Jenkins
+import com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy
+import com.michelin.cio.hudson.plugins.rolestrategy.Role
 
 def call(body) {
     def pipelineParams = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
+
+    def instance = Jenkins.getInstance().getAuthorizationStrategy() .hasPermission("devuser", Jenkins.ADMINISTER)
+
 
     pipeline {
         agent {
@@ -23,6 +29,8 @@ def call(body) {
             buildDiscarder(logRotator(numToKeepStr: '2'))
         }
         stages {
+
+
             stage('build') {
                 steps {
                     //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
@@ -97,27 +105,18 @@ def call(body) {
                     }
                 }
                 steps {
-                    /*
                     script {
-                        timeout(5) {
-                            input "Deploy to dev?"
+                        timeout(time:5, unit:'DAYS') {
+                            input message:'Approve deployment to Dev Environment?', submitter: 'it-ops'
                         }
-                    }
-                    */
-                    waitUntil{
-                        input "Deploy to dev waitUntil?"
                     }
                 }
             }
             stage('deploy: dev') {
                 when {
-                    allOf {
-                        not {
-                            branch 'master'
-                        }
-                        expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-                    }
+                    branch 'develop'
                 }
+
                 steps {
                     //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
                     echo "deployment to dev env successful"
