@@ -94,7 +94,7 @@ def call(body) {
                 }
             }
             stage('approval: dev') {
-                agent none
+                //agent none
                 when {
                     branch 'develop'
                 }
@@ -129,7 +129,7 @@ def call(body) {
             }
 
             stage('approval: stg') {
-                agent none
+                //agent none
                 when {
                     allOf {
                         branch 'release'
@@ -169,7 +169,7 @@ def call(body) {
             }
 
             stage('approval: prod') {
-                agent none
+                //agent none
                 when {
                     allOf {
                         branch 'master'
