@@ -96,9 +96,7 @@ def call(body) {
             stage('approval: dev') {
                 agent none
                 when {
-                    not {
-                        branch 'master'
-                    }
+                    branch 'develop'
                 }
                 steps {
                     script {
