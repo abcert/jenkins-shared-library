@@ -108,17 +108,18 @@ def call(body) {
             }
             stage('deploy: dev') {
 
-                steps{
-                    echo "BRANCH_NAME is ${env.BRANCH_NAME}"
-
-                }
 
 
-                when {
-                    branch 'develop'
-                }
+
+
+
+               // when {
+               //     branch 'develop'
+               // }
 
                 steps {
+                    echo "BRANCH_NAME is ${env.BRANCH_NAME}"
+
                     //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
                     echo "deployment to dev env successful"
                     //releaseHeroku(pipelineParams.developmentRepositoryUrl, 'development')
