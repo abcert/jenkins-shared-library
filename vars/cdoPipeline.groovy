@@ -101,7 +101,7 @@ def call(body) {
                 steps {
                     script {
                         timeout(time:5, unit:'DAYS') {
-                            input message:'Approve deployment to Dev Environment?', submitter: 'it-ops'
+                            input message:'Approve deployment to Dev Environment?'
                         }
                     }
                 }
