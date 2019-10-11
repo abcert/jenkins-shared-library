@@ -107,6 +107,13 @@ def call(body) {
                 }
             }
             stage('deploy: dev') {
+
+                steps{
+                    echo "BRANCH_NAME is ${env.BRANCH_NAME}"
+
+                }
+
+
                 when {
                     branch 'develop'
                 }
