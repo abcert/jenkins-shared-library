@@ -100,6 +100,7 @@ def call(body) {
                 }
                 steps {
                     script {
+                        echo "approval:dev BRANCH_NAME is ${env.BRANCH_NAME}"
                         timeout(time:5, unit:'DAYS') {
                             input message:'Approve deployment to Dev Environment?'
                         }
@@ -107,8 +108,6 @@ def call(body) {
                 }
             }
             stage('deploy: dev') {
-
-
 
 
 
