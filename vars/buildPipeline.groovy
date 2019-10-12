@@ -244,15 +244,15 @@ pipeline {
         }
         success {
             echo "Successful"
-            //sendEmail("Successful");
+            sendEmail("Successful");
         }
         unstable {
             echo "Unstable"
-            //sendEmail("Unstable");
+            sendEmail("Unstable");
         }
         failure {
             echo "Failed"
-            //sendEmail("Failed");
+            sendEmail("Failed");
         }
     }
 
