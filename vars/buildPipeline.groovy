@@ -72,6 +72,8 @@ pipeline {
                 cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
             }
         }
+
+        /*
         stage('Sonar scan execution') {
             // Run the sonar scan
             steps {
@@ -99,6 +101,8 @@ pipeline {
                 }
             }
         }
+        */
+
         stage('Development deploy approval and deployment') {
             steps {
                 script {
@@ -136,7 +140,7 @@ pipeline {
                             script {
                                 def mvnHome = tool 'maven'
                                 //NOTE : if u change the sanity test class name , change it here as well
-                                sh "'${mvnHome}/bin/mvn' -Dtest=ApplicationSanityCheck_ITT surefire:test"
+                                //sh "'${mvnHome}/bin/mvn' -Dtest=ApplicationSanityCheck_ITT surefire:test"
                             }
 
                         }
@@ -164,8 +168,8 @@ pipeline {
                             sh "git tag -f v${v}"
                             sh "git push -f --tags"
                         }
-                        sh "'${mvnHome}/bin/mvn' -Dmaven.test.skip=true  versions:set  -DgenerateBackupPoms=false -DnewVersion=${v}"
-                        sh "'${mvnHome}/bin/mvn' -Dmaven.test.skip=true clean deploy"
+                        //sh "'${mvnHome}/bin/mvn' -Dmaven.test.skip=true  versions:set  -DgenerateBackupPoms=false -DnewVersion=${v}"
+                        //sh "'${mvnHome}/bin/mvn' -Dmaven.test.skip=true clean deploy"
 
                     } else {
                         error "Release is not possible. as build is not successful"
@@ -219,7 +223,7 @@ pipeline {
                             script {
                                 def mvnHome = tool 'maven'
                                 // NOTE : if you change the test class name change it here as well
-                                sh "'${mvnHome}/bin/mvn' -Dtest=ApplicationE2E surefire:test"
+                                //sh "'${mvnHome}/bin/mvn' -Dtest=ApplicationE2E surefire:test"
                             }
 
                         }
