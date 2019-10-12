@@ -228,6 +228,7 @@ pipeline {
             }
         }
     }
+    /*
     post {
         // Always runs. And it runs before any of the other post conditions.
         always {
@@ -244,6 +245,7 @@ pipeline {
             sendEmail("Failed");
         }
     }
+    */
 
 // The options directive is for configuration that applies to the whole job.
     options {
