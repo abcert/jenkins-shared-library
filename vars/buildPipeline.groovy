@@ -1,3 +1,9 @@
+def call(body) {
+    def pipelineParams = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = pipelineParams
+    body()
+
 pipeline {
     // run on jenkins nodes tha has java 8 label
     agent { label 'master' }
@@ -332,3 +338,4 @@ def getReleaseVersion() {
                        failFast: true)
            }
        }*/
+}
