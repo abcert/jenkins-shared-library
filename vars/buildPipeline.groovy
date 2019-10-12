@@ -240,13 +240,16 @@ pipeline {
             deleteDir()
         }
         success {
-            sendEmail("Successful");
+            echo "Successful"
+            //sendEmail("Successful");
         }
         unstable {
-            sendEmail("Unstable");
+            echo "Unstable"
+            //sendEmail("Unstable");
         }
         failure {
-            sendEmail("Failed");
+            echo "Failed"
+            //sendEmail("Failed");
         }
     }
 
