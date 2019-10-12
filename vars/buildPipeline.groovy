@@ -35,6 +35,7 @@ pipeline {
                         print targetVersion
                         //change directory for javamodule where we have pom
                         dir("javamodule")
+                        sh "ls -lrt"
                         sh "'${mvnHome}/bin/mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
                         def pom = readMavenPom file: 'pom.xml'
                         // get the current development version 
