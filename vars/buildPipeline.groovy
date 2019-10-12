@@ -43,8 +43,8 @@ pipeline {
                             developmentArtifactVersion = "${pom.version}-${targetVersion}"
                             print pom.version
                             // execute the unit testing and collect the reports
-                            junit '**//*target/surefire-reports/TEST-*.xml'
-                            archive 'target*//*.jar'
+                            //junit '**//*target/surefire-reports/TEST-*.xml'
+                            //archive 'target*//*.jar'
                         }
                     } else {
                         bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
@@ -64,14 +64,15 @@ pipeline {
                     def mvnHome = tool 'maven'
                     if (isUnix()) {
                         // just to trigger the integration test without unit testing
-                        sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
+                        //sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
+                        echo "Integration test"
                     } else {
                         bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
                     }
 
                 }
                 // cucumber reports collection
-                cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
+                //cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
             }
         }
 
