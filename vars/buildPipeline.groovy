@@ -253,10 +253,42 @@ pipeline {
     }
 
 }
+
+
+// if you want parallel execution , check below :
+/* stage('Quality Gate(Integration Tests and Sonar Scan)') {
+           // Run the maven build
+           steps {
+               parallel(
+                       IntegrationTest: {
+                           script {
+                               def mvnHome = tool 'Maven 3.3.9'
+                               if (isUnix()) {
+                                   sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
+                               } else {
+                                   bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
+                               }
+
+                           }
+                       },
+                       SonarCheck: {
+                           script {
+                               def mvnHome = tool 'Maven 3.3.9'
+                               withSonarQubeEnv {
+                                   // sh "'${mvnHome}/bin/mvn'  verify sonar:sonar -Dsonar.host.url=http://bicsjava.bc/sonar/ -Dmaven.test.failure.ignore=true"
+                                   sh "'${mvnHome}/bin/mvn'  verify sonar:sonar -Dmaven.test.failure.ignore=true"
+                               }
+                           }
+                       },
+                       failFast: true)
+           }
+       }*/
+}
+
 def developmentArtifactVersion = ''
 def releasedVersion = ''
 // get change log to be send over the mail
-//@NonCPS
+@NonCPS
 def getChangeString() {
     MAX_MSG_LEN = 100
     def changeString = ""
@@ -308,34 +340,4 @@ def getReleaseVersion() {
         versionNumber = gitCommit.take(8);
     }
     return pom.version.replace("-SNAPSHOT", ".${versionNumber}")
-}
-
-// if you want parallel execution , check below :
-/* stage('Quality Gate(Integration Tests and Sonar Scan)') {
-           // Run the maven build
-           steps {
-               parallel(
-                       IntegrationTest: {
-                           script {
-                               def mvnHome = tool 'Maven 3.3.9'
-                               if (isUnix()) {
-                                   sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
-                               } else {
-                                   bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
-                               }
-
-                           }
-                       },
-                       SonarCheck: {
-                           script {
-                               def mvnHome = tool 'Maven 3.3.9'
-                               withSonarQubeEnv {
-                                   // sh "'${mvnHome}/bin/mvn'  verify sonar:sonar -Dsonar.host.url=http://bicsjava.bc/sonar/ -Dmaven.test.failure.ignore=true"
-                                   sh "'${mvnHome}/bin/mvn'  verify sonar:sonar -Dmaven.test.failure.ignore=true"
-                               }
-                           }
-                       },
-                       failFast: true)
-           }
-       }*/
 }
