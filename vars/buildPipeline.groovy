@@ -218,7 +218,7 @@ pipeline {
             }
             steps {
                 // give some time till the deployment is done, so we wait 45 seconds
-                sleep(45)
+                sleep(5)
                 script {
                     if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
                         timeout(time: 1, unit: 'MINUTES') {
