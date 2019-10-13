@@ -22,7 +22,7 @@ pipeline {
         stage('Build with unit testing') {
             steps {
 
-                input message: '', parameters: [choice(choices: ['develop', 'feature', 'master'], description: 'select branch based on env.', name: 'SELECT_BRANCH_NAME')]
+                //input message: '', parameters: [choice(choices: ['develop', 'feature', 'master'], description: 'select branch based on env.', name: 'SELECT_BRANCH_NAME')]
 
                 echo "${SELECT_BRANCH_NAME}"
                 // Run the maven build
