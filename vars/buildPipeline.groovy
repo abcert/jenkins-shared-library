@@ -10,6 +10,7 @@ pipeline {
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'certification82@gmail.com'
+        env.BRANCH_NAME='master'
     }
     
     tools {
