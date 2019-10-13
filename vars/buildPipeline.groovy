@@ -10,7 +10,6 @@ pipeline {
     // global env variables
     environment {
         EMAIL_RECIPIENTS = 'certification82@gmail.com'
-        env.BRANCH_NAME='master'
     }
     
     tools {
@@ -22,12 +21,17 @@ pipeline {
 
         stage('Build with unit testing') {
             steps {
+
+                input message: '', parameters: [choice(choices: ['develop', 'feature', 'master'], description: 'select brach based on env.', name: 'SELECT_BRANCH_NAME')]
                 // Run the maven build
                 script {
                     // Get the Maven tool.
                     // ** NOTE: This 'M3' Maven tool must be configured
                     // **       in the global configuration.
+
                     checkout scm
+
+
                     echo 'Pulling...' + env.BRANCH_NAME
                     def mvnHome = tool 'maven'
                     if (isUnix()) {
