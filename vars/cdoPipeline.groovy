@@ -57,42 +57,7 @@ def call(body) {
                     }
                 }
             }
-            stage('qa: static code analysis') {
-                steps {
-                    //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
-                    sh """
-            ls -lrt
-          """
-                }
-                post {
-                    success {
-                        echo "success"
-                        //notifySuccess(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
-                    }
-                    failure {
-                        echo "failure"
-                        //notifyFailure(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
-                    }
-                }
-            }
-            stage('qa: unit & integration tests') {
-                steps {
-                    //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
-                    sh """
-            ls -lrt
-          """
-                }
-                post {
-                    success {
-                        echo "success"
-                        //notifySuccess(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
-                    }
-                    failure {
-                        echo "failure"
-                        //notifyFailure(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
-                    }
-                }
-            }
+
             stage('approval: dev') {
                 //agent none
                 when {
@@ -102,7 +67,7 @@ def call(body) {
                     script {
                         echo "approval:dev BRANCH_NAME is ${env.BRANCH_NAME}"
                         timeout(time:5, unit:'DAYS') {
-                            input message:'Approve deployment to Dev Environment?'
+                            input message:"Approve deployment to Dev Environment from BRANCH:${env.BRANCH_NAME}?"
                         }
                     }
                 }
@@ -114,9 +79,9 @@ def call(body) {
                     branch 'develop'
                 }
 
-               // when {
-               //     branch 'develop'
-               // }
+                // when {
+                //     branch 'develop'
+                // }
 
                 steps {
                     echo "BRANCH_NAME is ${env.BRANCH_NAME}"
@@ -137,7 +102,7 @@ def call(body) {
                 }
             }
 
-            stage('approval: stg') {
+            stage('approval: staging') {
                 //agent none
                 when {
                     branch 'release'
@@ -145,13 +110,13 @@ def call(body) {
                 steps {
                     script {
                         timeout(5) {
-                            input "Deploy to stg?"
+                            input "Deploy to staging/testing environment?"
                         }
                     }
                 }
             }
 
-            stage('deploy: stg') {
+            stage('deploy: staging') {
                 when {
                     allOf {
                         branch 'release'
@@ -160,8 +125,53 @@ def call(body) {
                 }
                 steps {
                     //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
-                    echo "deployment to stg succesful"
+                    echo "Deployment to staging/testing successful"
                     //releaseHeroku(pipelineParams.stagingRepositoryUrl, 'staging')
+                }
+                post {
+                    success {
+                        echo "success"
+                        //notifySuccess(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
+                    }
+                    failure {
+                        echo "failure"
+                        //notifyFailure(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
+                    }
+                }
+            }
+
+            stage('qa: static code analysis on staging/testing env') {
+                when {
+                    branch 'release'
+                }
+                steps {
+                    //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
+                    sh """
+            ls -lrt
+          """
+                }
+                post {
+                    success {
+                        echo "success"
+                        //notifySuccess(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
+                    }
+                    failure {
+                        echo "failure"
+                        //notifyFailure(env.STAGE_NAME, pipelineParams.slackNotificationChannel)
+                    }
+                }
+            }
+            stage('qa: unit & integration tests on staging/testing env') {
+
+                when {
+                    branch 'release'
+                }
+
+                steps {
+                    //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
+                    sh """
+            ls -lrt
+          """
                 }
                 post {
                     success {
