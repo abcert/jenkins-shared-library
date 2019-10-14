@@ -6,6 +6,7 @@ def call(body) {
     body.delegate = pipelineParams
     body()
 
+    println(pipelineParams)
 
     pipeline {
         agent {
