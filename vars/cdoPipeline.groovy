@@ -110,7 +110,9 @@ def call(body) {
             stage('deploy: dev') {
 
 
-
+                when {
+                    branch 'develop'
+                }
 
                // when {
                //     branch 'develop'
@@ -138,9 +140,7 @@ def call(body) {
             stage('approval: stg') {
                 //agent none
                 when {
-                    allOf {
-                        branch 'release'
-                    }
+                    branch 'release'
                 }
                 steps {
                     script {

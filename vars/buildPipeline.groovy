@@ -33,7 +33,6 @@ pipeline {
 
                     checkout scm
 
-
                     echo 'Pulling...' + env.BRANCH_NAME
                     def mvnHome = tool 'maven'
                     if (isUnix()) {
