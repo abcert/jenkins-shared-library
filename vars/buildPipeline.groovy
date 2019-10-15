@@ -30,6 +30,7 @@ pipeline {
         stage('Build with unit testing') {
             steps {
 
+                echo "Printing Env->  ${env}"
                 //input message: '', parameters: [choice(choices: ['develop', 'feature', 'master'], description: 'select branch based on env.', name: 'SELECT_BRANCH_NAME')]
 
                 //echo "${SELECT_BRANCH_NAME}"
