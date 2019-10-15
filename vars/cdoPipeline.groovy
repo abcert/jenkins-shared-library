@@ -34,8 +34,8 @@ def call(body) {
                     deleteDir()
                     checkout scm
                     sh """
-            ls -lrt
-          """
+                        ls -lrt
+                       """
 
                  dir("javamodule"){
                      sh """
@@ -232,11 +232,8 @@ def call(body) {
                     }
                 }
                 steps {
-                    notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
-
-                    sh """
-            ls -lrt
-          """
+                    //notifyBitbucket('INPROGRESS', env.STAGE_NAME, env.STAGE_NAME)
+                    echo "${env.STAGE_NAME}, ${env.STAGE_NAME}"
                 }
                 post {
                     success {
@@ -255,6 +252,7 @@ def call(body) {
                 script {
                     if (currentBuild.result == null) {
                         currentBuild.result = 'SUCCESS'
+                        echo "Build successful - ashishb"
                     }
                 }
                 //step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: gitAuthorEmail(), sendToIndividuals: true])
