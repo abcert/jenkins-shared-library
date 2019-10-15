@@ -212,6 +212,7 @@ pipeline {
                             //input message:'Approve deployment?', submitter: 'it-ops'
                             input message: 'Approve deployment to UAT?'
                         }
+                        /*
                         timeout(time: 3, unit: 'MINUTES') {
                             //  deployment job which will take the relasesed version
                             if (releasedVersion != null && !releasedVersion.isEmpty()) {
@@ -227,6 +228,8 @@ pipeline {
                             }
 
                         }
+
+                         */
                     }
                 }
             }
@@ -262,7 +265,7 @@ pipeline {
         // Always runs. And it runs before any of the other post conditions.
         always {
             // Let's wipe out the workspace before we finish!
-            //deleteDir()
+            deleteDir()
         }
         success {
             echo "Successful"
