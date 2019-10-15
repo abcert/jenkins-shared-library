@@ -17,7 +17,7 @@ pipeline {
             jdk 'jdk'
     }
 
-    println pipelineParams
+    echo pipelineParams
 
     stages {
 
