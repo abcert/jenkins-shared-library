@@ -16,7 +16,9 @@ pipeline {
             maven 'maven'
             jdk 'jdk'
     }
-        
+
+    println(pipelineParams)
+
     stages {
 
         stage('Build with unit testing') {
@@ -116,7 +118,7 @@ pipeline {
             steps {
                 script {
                     if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                        timeout(time: 3, unit: 'MINUTES') {
+                        timeout(time: 3, unit: 'DAYS') {
                             // you can use the commented line if u have specific user group who CAN ONLY approve
                             //input message:'Approve deployment?', submitter: 'it-ops'
                             input message: 'Approve deployment?'

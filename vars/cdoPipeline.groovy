@@ -10,7 +10,6 @@ def call(body) {
 
     pipeline {
         agent {
-            //label 'builder-backend'
             label 'master'
         }
 
