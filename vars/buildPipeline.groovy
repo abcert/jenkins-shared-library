@@ -421,6 +421,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
             "Change Set: " + changeSet + " \n " +
             "Change Log: " + changeLog
 
+    echo "${summary}"
+
     if (buildStatus == 'STARTED') {
         color = 'YELLOW'
         colorCode = '#FFFF00'
