@@ -408,7 +408,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
     // build status of null means successful
     buildStatus = buildStatus ?: 'SUCCESS'
 
-    def branchName = getCurrentBranch()
+    def branchName =  env.BRANCH_NAME //getCurrentBranch()
     def shortCommitHash = getShortCommitHash()
     def changeAuthorName = getChangeAuthorName()
     def changeAuthorEmail = getChangeAuthorEmail()
