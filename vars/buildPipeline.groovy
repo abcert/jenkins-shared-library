@@ -267,11 +267,13 @@ pipeline {
         }
         unstable {
             echo "Unstable"
-            sendEmail("Unstable");
+            //sendEmail("Unstable");
+            notifyBuild("Successful")
         }
         failure {
             echo "Failed"
-            sendEmail("Failed");
+            //sendEmail("Failed");
+            notifyBuild("Successful")
         }
     }
 }
