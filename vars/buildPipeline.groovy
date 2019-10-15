@@ -226,20 +226,22 @@ pipeline {
                 branch 'master'
             }
             steps {
-                // give some time till the deployment is done, so we wait 45 seconds
-                sleep(5)
-                script {
-                    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-                        timeout(time: 1, unit: 'MINUTES') {
 
-                            script {
-                                def mvnHome = tool 'maven'
+                echo "ACC E2E tests stage"
+                // give some time till the deployment is done, so we wait 45 seconds
+                //sleep(5)
+                //script {
+                    //if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                        //timeout(time: 1, unit: 'MINUTES') {
+
+                          //  script {
+                            //    def mvnHome = tool 'maven'
                                 // NOTE : if you change the test class name change it here as well
                                 //sh "'${mvnHome}/bin/mvn' -Dtest=ApplicationE2E surefire:test"
-                            }
+                           // }
 
-                        }
-                    }
+                       // }
+                  //  }
                 }
             }
         }
@@ -249,7 +251,7 @@ pipeline {
         // Always runs. And it runs before any of the other post conditions.
         always {
             // Let's wipe out the workspace before we finish!
-            deleteDir()
+            //deleteDir()
         }
         success {
             echo "Successful"
