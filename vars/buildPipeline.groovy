@@ -175,11 +175,15 @@ pipeline {
                 script {
                     def mvnHome = tool 'maven'
                     if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+                        echo "${currentBuild.result}"
+                        /*
                         def v = getReleaseVersion()
                         releasedVersion = v;
                         if (v) {
                             echo "Building version ${v} - so released version is ${releasedVersion}"
                         }
+                        */
+                         */
                         // jenkins user credentials ID which is transparent to the user and password change
                         /*
                         sshagent(['0000000-3b5a-454e-a8e6-c6b6114d36000']) {
