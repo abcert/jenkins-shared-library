@@ -226,9 +226,7 @@ pipeline {
                             } else {
                                 error 'the application is not  deployed as released version is null!'
                             }
-
                         }
-
                          */
                     }
                 }
@@ -259,7 +257,6 @@ pipeline {
                 }
             }
         }
-    }
 
     post {
         // Always runs. And it runs before any of the other post conditions.
@@ -283,6 +280,10 @@ pipeline {
             notifyBuild("Successful")
         }
     }
+
+    }
+
+
 }
 
 
