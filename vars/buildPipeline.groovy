@@ -11,6 +11,12 @@ pipeline {
     environment {
         EMAIL_RECIPIENTS = 'certification82@gmail.com'
     }
+
+    wrap([$class: 'BuildUser']) {
+        env.BUILD_USER_ID = env.BUILD_USER_ID
+        env.BUILD_USER_ATTUID = env.BUILD_USER_ID.split('@')[0]
+        env.BUILD_USER_EMAIL = env.BUILD_USER_EMAIL.replaceAll('csp.','')
+    }
     
     tools {
             maven 'maven'
@@ -27,7 +33,14 @@ pipeline {
 
     stages {
 
-        stage('Build with unit testing') {
+        stage('Checkout Code'){
+            steps{
+                //echo "Checking out code"
+                checkout scm
+            }
+        }
+
+        stage('Build Project') {
             steps {
 
                 echo "Printing Env->  ${env}"
@@ -40,7 +53,6 @@ pipeline {
                     // ** NOTE: This 'M3' Maven tool must be configured
                     // **       in the global configuration.
 
-                    checkout scm
 
                     echo 'Pulling...' + env.BRANCH_NAME
                     def mvnHome = tool 'maven'
