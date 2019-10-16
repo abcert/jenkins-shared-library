@@ -104,14 +104,17 @@ pipeline {
                 script {
                     if(pipelineParams.containsKey("javaModule")){
                         def mvnHome = tool 'maven'
-                        if (isUnix()) {
-                            // just to trigger the integration test without unit testing
-                            //sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
-                            sh 'mvn verify -Dunit-tests.skip=true'
-                            echo "Unit Tests"
-                        } else {
-                            bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
+                        dir(pipelineParams.get("javaModule")){
+                            if (isUnix()) {
+                                // just to trigger the integration test without unit testing
+                                //sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
+                                sh 'mvn verify -Dunit-tests.skip=true'
+                                echo "Unit Tests"
+                            } else {
+                                bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
+                            }
                         }
+
                     }
                 }
                 // cucumber reports collection
