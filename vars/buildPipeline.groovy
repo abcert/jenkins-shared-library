@@ -44,9 +44,7 @@ pipeline {
                 script{
                     currentBuild.displayName = "${pipelineParams.get("crNumber")}-${env.BUILD_NUMBER}"
                     currentBuild.description = "${pipelineParams.get("description")}"
-
                 }
-
                 //echo "Checking out code"
                 deleteDir()
                 checkout scm
@@ -65,34 +63,36 @@ pipeline {
                     // Get the Maven tool.
                     // ** NOTE: This 'M3' Maven tool must be configured
                     // **       in the global configuration.
-
-
-                    echo 'Pulling...' + env.BRANCH_NAME
-                    def mvnHome = tool 'maven'
-                    if (isUnix()) {
-                        def targetVersion = getDevVersion()
-                        print 'target build version...'
-                        print targetVersion
-                        //change directory for javamodule where we have pom
-                        dir("javamodule"){
-                            sh "ls -lrt"
-                            //sh "'${mvnHome}/bin/mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
-                            sh 'mvn clean package -DskipTests=true'
+                    if(pipelineParams.containsKey("javaModule")){
+                        echo 'Pulling...' + env.BRANCH_NAME
+                        def mvnHome = tool 'maven'
+                        if (isUnix()) {
+                            def targetVersion = getDevVersion()
+                            print 'target build version...'
+                            print targetVersion
+                            //change directory for javamodule where we have pom
+                            dir(pipelineParams.get("javaModule")){
+                                sh "ls -lrt"
+                                //sh "'${mvnHome}/bin/mvn' -Dintegration-tests.skip=true -Dbuild.number=${targetVersion} clean package"
+                                sh 'mvn clean package -DskipTests=true'
+                                def pom = readMavenPom file: 'pom.xml'
+                                // get the current development version
+                                developmentArtifactVersion = "${pom.version}-${targetVersion}"
+                                print pom.version
+                                // execute the unit testing and collect the reports
+                                //junit '**//*target/surefire-reports/TEST-*.xml'
+                                //archive 'target*//*.jar'
+                            }
+                        } else {
+                            bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
                             def pom = readMavenPom file: 'pom.xml'
-                            // get the current development version
-                            developmentArtifactVersion = "${pom.version}-${targetVersion}"
                             print pom.version
-                            // execute the unit testing and collect the reports
-                            //junit '**//*target/surefire-reports/TEST-*.xml'
-                            //archive 'target*//*.jar'
+                            junit '**//*target/surefire-reports/TEST-*.xml'
+                            archive 'target*//*.jar'
                         }
-                    } else {
-                        bat(/"${mvnHome}\bin\mvn" -Dintegration-tests.skip=true clean package/)
-                        def pom = readMavenPom file: 'pom.xml'
-                        print pom.version
-                        junit '**//*target/surefire-reports/TEST-*.xml'
-                        archive 'target*//*.jar'
                     }
+
+
                 }
 
             }
