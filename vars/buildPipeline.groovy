@@ -97,6 +97,28 @@ pipeline {
 
             }
         }
+
+        stage('Unit Tests') {
+            // Run unit test
+            steps {
+                script {
+                    if(pipelineParams.containsKey("javaModule")){
+                        def mvnHome = tool 'maven'
+                        if (isUnix()) {
+                            // just to trigger the integration test without unit testing
+                            //sh "'${mvnHome}/bin/mvn'  verify -Dunit-tests.skip=true"
+                            sh 'mvn verify -Dunit-tests.skip=true'
+                            echo "Unit Tests"
+                        } else {
+                            bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
+                        }
+                    }
+                }
+                // cucumber reports collection
+                //cucumber buildStatus: null, fileIncludePattern: '**/cucumber.json', jsonReportDirectory: 'target', sortingMethod: 'ALPHABETICAL'
+            }
+        }
+
         stage('Integration tests') {
             // Run integration test
             steps {
