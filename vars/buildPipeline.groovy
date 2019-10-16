@@ -114,6 +114,8 @@ pipeline {
                                 bat(/"${mvnHome}\bin\mvn" verify -Dunit-tests.skip=true/)
                             }
                         }
+                        echo "Lets see what directory it shows"
+                        sh "ls -lrt"
 
                     }
                 }
