@@ -4,6 +4,7 @@ def call(body) {
     body.delegate = pipelineParams
     body()
     println(pipelineParams)
+
 pipeline {
     // run on jenkins nodes tha has java 8 label
     agent { label 'master' }
@@ -40,6 +41,10 @@ pipeline {
 
         stage('Checkout Code'){
             steps{
+
+                currentBuild.displayName = "${pipelineParams.get("crNumber")}-${env.BUILD_NUMBER}"
+                currentBuild.description = "${pipelineParams.get("description")}"
+
                 //echo "Checking out code"
                 deleteDir()
                 checkout scm
