@@ -3,7 +3,7 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
-
+    println(pipelineParams)
 pipeline {
     // run on jenkins nodes tha has java 8 label
     agent { label 'master' }
@@ -12,6 +12,7 @@ pipeline {
         EMAIL_RECIPIENTS = 'certification82@gmail.com'
     }
 
+    /*
     script{
         wrap([$class: 'BuildUser']) {
             env.BUILD_USER_ID = env.BUILD_USER_ID
@@ -19,6 +20,7 @@ pipeline {
             env.BUILD_USER_EMAIL = env.BUILD_USER_EMAIL.replaceAll('csp.','')
         }
     }
+     */
 
     
     tools {
@@ -39,6 +41,7 @@ pipeline {
         stage('Checkout Code'){
             steps{
                 //echo "Checking out code"
+                deleteDir()
                 checkout scm
             }
         }
