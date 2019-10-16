@@ -41,9 +41,11 @@ pipeline {
 
         stage('Checkout Code'){
             steps{
+                script{
+                    currentBuild.displayName = "${pipelineParams.get("crNumber")}-${env.BUILD_NUMBER}"
+                    currentBuild.description = "${pipelineParams.get("description")}"
 
-                currentBuild.displayName = "${pipelineParams.get("crNumber")}-${env.BUILD_NUMBER}"
-                currentBuild.description = "${pipelineParams.get("description")}"
+                }
 
                 //echo "Checking out code"
                 deleteDir()
