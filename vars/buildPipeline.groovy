@@ -5,7 +5,7 @@ def call(body) {
     body()
     println(pipelineParams)
 
-pipeline {
+//pipeline {
     // run on jenkins nodes tha has java 8 label
     agent { label 'master' }
     // global env variables
@@ -43,7 +43,7 @@ pipeline {
             steps{
                 script{
                     currentBuild.displayName = "${pipelineParams.get("crNumber")}-${env.BUILD_NUMBER}"
-                    currentBuild.description = "${pipelineParams.get("description")}"
+                    //currentBuild.description = "${pipelineParams.get("description")}"
                 }
                 //echo "Checking out code"
                 deleteDir()
@@ -338,7 +338,7 @@ pipeline {
     }
 
 
-}
+//pipeline ends here  }
 
 
 // if you want parallel execution , check below :
